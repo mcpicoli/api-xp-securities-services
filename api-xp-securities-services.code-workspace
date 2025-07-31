@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.codeActionsOnSave": {
+		"source.organizeImports": "always"
+		},
+		"[python]": {
+		"editor.formatOnSave": true
+		},
+		"isort.args": ["--profile", "black"]
+	},
+}
