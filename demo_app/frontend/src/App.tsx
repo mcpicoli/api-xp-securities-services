@@ -1,35 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import AuthForm from './Auth';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [token, setToken] = useState(null);
+
+  if (!token) {
+    return <AuthForm onAuth={setToken} />;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ color: '#eee', background: '#222', minHeight: '100vh', padding: '2rem' }}>
+      <h2>Autenticado!</h2>
+      <pre style={{ background: '#333', color: '#fff', padding: '1rem', borderRadius: '8px' }}>
+        {JSON.stringify(token, null, 2)}
+      </pre>
+      {/* Aqui você pode renderizar as interfaces dos outros endpoints */}
+    </div>
+  );
 }
 
 export default App
