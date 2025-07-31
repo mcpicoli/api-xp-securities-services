@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from src.common.responses import ApiErrorResponse
+
 from .enums import FileFormatEnum, FilePortfolioEnum, FileTypeEnum
 
 
@@ -37,16 +39,14 @@ class FileListItem:
 
 
 @dataclass
-class FileListResponse:
+class FileListResponse(ApiErrorResponse):
+    """
+    Resposta da listagem de arquivos, incluindo tratamento de erro padronizado.
+    """
+
     pagination: Optional[dict] = None
     count: Optional[int] = None
     files: List[FileListItem] = field(default_factory=list)
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
-    isSuccess: Optional[bool] = None
-    statusCode: Optional[int] = None
-    message: Optional[str] = None
 
     @staticmethod
     def from_dict(data: dict):

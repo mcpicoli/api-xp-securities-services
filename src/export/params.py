@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional
 
 from src.export.enums import (
@@ -11,8 +12,8 @@ from src.export.enums import (
 
 @dataclass
 class PassiveOrdersExportParams:
-    startAt: str
-    endAt: str
+    startAt: datetime
+    endAt: datetime
     dateTypeId: ExportOrderType
     orderTypeId: Optional[ExportOrderCotizado] = None
     viewTypeId: Optional[ExportOrderViewType] = None
@@ -30,6 +31,8 @@ class PassiveOrdersExportParams:
             if v is not None:
                 if hasattr(v, "value"):
                     d[k] = v.value
+                elif isinstance(v, datetime):
+                    d[k] = v.strftime("%Y-%m-%dT%H:%M:%S")
                 else:
                     d[k] = v
         return d

@@ -1,16 +1,12 @@
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from src.common.responses import ApiErrorResponse
+
 
 @dataclass
-class CustodyMovementResponse:
-    statusCode: Optional[int] = None
-    message: Optional[str] = None
+class CustodyMovementResponse(ApiErrorResponse):
     movimento: Optional[dict] = None
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
-    isSuccess: Optional[bool] = None
 
     def from_dict(data: dict):
         return CustodyMovementResponse(

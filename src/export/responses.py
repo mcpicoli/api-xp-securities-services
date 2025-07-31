@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from src.common.responses import ApiErrorResponse
+
 from .enums import (
     ExportDateTypeEnum,
     ExportOrderTypeEnum,
@@ -10,14 +12,12 @@ from .enums import (
 
 
 @dataclass
-class ExportOrderResponse:
+class ExportOrderResponse(ApiErrorResponse):
+    """
+    Resposta da exportação de ordens, incluindo tratamento de erro padronizado.
+    """
+
     id: Optional[int] = None
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
-    isSuccess: Optional[bool] = None
-    statusCode: Optional[int] = None
-    message: Optional[str] = None
 
     def from_dict(data: dict):
         return ExportOrderResponse(
@@ -59,17 +59,15 @@ class ExportOrderListItem:
 
 
 @dataclass
-class ExportOrderListResponse:
+class ExportOrderListResponse(ApiErrorResponse):
+    """
+    Resposta da listagem de exportações de ordens, incluindo tratamento de erro padronizado.
+    """
+
     items: List[ExportOrderListItem] = field(default_factory=list)
     pageSize: Optional[int] = None
     pageNumber: Optional[int] = None
     count: Optional[int] = None
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
-    isSuccess: Optional[bool] = None
-    statusCode: Optional[int] = None
-    message: Optional[str] = None
 
     @staticmethod
     def from_dict(data: dict):

@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from src.common.responses import ApiErrorResponse
+
 
 @dataclass
 class WalletActiveItem:
@@ -12,15 +14,13 @@ class WalletActiveItem:
 
 
 @dataclass
-class WalletsActiveResponse:
+class WalletsActiveResponse(ApiErrorResponse):
+    """
+    Resposta da listagem de carteiras, incluindo tratamento de erro padronizado.
+    """
+
     totalWallets: Optional[int] = None
     wallets: List[WalletActiveItem] = field(default_factory=list)
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
-    isSuccess: Optional[bool] = None
-    statusCode: Optional[int] = None
-    message: Optional[str] = None
 
     def from_dict(data: dict):
         wallets = [WalletActiveItem(**item) for item in data.get("wallets", [])]

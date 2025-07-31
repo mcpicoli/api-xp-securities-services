@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from src.common.responses import ApiErrorResponse
+
 from .enums import (
     AssetTypeEnum,
     FixedIncomeStatusEnum,
@@ -11,20 +13,24 @@ from .enums import (
 
 
 @dataclass
-class FixedIncomeOrderResponse:
-    success: Optional[bool] = None
-    message: Optional[str] = None
+class FixedIncomeOrderResponse(ApiErrorResponse):
+    """
+    Resposta da criação de boleta de renda fixa, incluindo tratamento de erro padronizado.
+    """
+
     correlationId: Optional[str] = None
     orderId: Optional[int] = None
-    errorMessages: Optional[List[str]] = None
 
     def from_dict(data: dict):
         return FixedIncomeOrderResponse(
-            success=data.get("success"),
-            message=data.get("message"),
             correlationId=data.get("correlationId"),
             orderId=data.get("orderId"),
             errorMessages=data.get("errorMessages"),
+            messages=data.get("messages"),
+            errorCodeMessages=data.get("errorCodeMessages"),
+            isSuccess=data.get("isSuccess"),
+            statusCode=data.get("statusCode"),
+            message=data.get("message"),
         )
 
 
@@ -112,15 +118,15 @@ class FixedIncomeOrderListItem:
 
 
 @dataclass
-class FixedIncomeOrderListResponse:
+class FixedIncomeOrderListResponse(ApiErrorResponse):
+    """
+    Resposta da listagem de boletas de renda fixa, incluindo tratamento de erro padronizado.
+    """
+
     orders: List[FixedIncomeOrderListItem] = field(default_factory=list)
     totalItems: Optional[int] = None
     page: Optional[int] = None
     pageSize: Optional[int] = None
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[Any] = None
-    isSuccess: Optional[bool] = None
 
     def from_dict(data: dict):
         orders = [
@@ -135,4 +141,6 @@ class FixedIncomeOrderListResponse:
             messages=data.get("messages"),
             errorCodeMessages=data.get("errorCodeMessages"),
             isSuccess=data.get("isSuccess"),
+            statusCode=data.get("statusCode"),
+            message=data.get("message"),
         )

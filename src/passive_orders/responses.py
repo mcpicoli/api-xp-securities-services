@@ -1,43 +1,42 @@
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from src.common.responses import ApiErrorResponse
+
 from .enums import PassiveOrderStatusEnum
 
 
 @dataclass
-class PassiveOrdersValidationResponse:
-    isSuccess: Optional[bool] = None
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
+class PassiveOrdersValidationResponse(ApiErrorResponse):
+    """
+    Resposta da validação de arquivo de ordens passivas, incluindo tratamento de erro padronizado.
+    """
+
     statusCode: Optional[PassiveOrderStatusEnum] = None
-    message: Optional[str] = None
 
     @staticmethod
     def from_dict(data: dict):
         return PassiveOrdersValidationResponse(
-            isSuccess=data.get("isSuccess"),
-            errorMessages=data.get("errorMessages"),
-            messages=data.get("messages"),
-            errorCodeMessages=data.get("errorCodeMessages"),
             statusCode=(
                 PassiveOrderStatusEnum(data.get("statusCode"))
                 if data.get("statusCode") is not None
                 else None
             ),
+            errorMessages=data.get("errorMessages"),
+            messages=data.get("messages"),
+            errorCodeMessages=data.get("errorCodeMessages"),
+            isSuccess=data.get("isSuccess"),
             message=data.get("message"),
         )
 
 
 @dataclass
-class PassiveOrdersFileUploadResponse:
+class PassiveOrdersFileUploadResponse(ApiErrorResponse):
+    """
+    Resposta do upload de arquivo de ordens passivas, incluindo tratamento de erro padronizado.
+    """
+
     id: Optional[str] = None
-    errorMessages: Optional[List[str]] = None
-    messages: Optional[List[str]] = None
-    errorCodeMessages: Optional[List[str]] = None
-    isSuccess: Optional[bool] = None
-    statusCode: Optional[int] = None
-    message: Optional[str] = None
 
     def from_dict(data: dict):
         return PassiveOrdersFileUploadResponse(

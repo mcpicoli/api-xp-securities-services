@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional
 
 from src.fundquota.enums import (
@@ -12,15 +13,15 @@ from src.fundquota.enums import (
 @dataclass
 class FundQuotaOrderParams:
     origin: str
-    orderDate: str
+    orderDate: datetime
     managerLegalId: str
     fundLegalId: str
     fundISINCode: Optional[str] = None
     operationType: Optional[FundQuotaOperationType] = None
     assetLegalId: str = ""
     assetISINCode: Optional[str] = None
-    settlementDate: str = ""
-    quotationDate: str = ""
+    settlementDate: Optional[datetime] = None
+    quotationDate: Optional[datetime] = None
     quantity: float = 0.0
     value: float = 0.0
     settlementType: Optional[SettlementType] = None
@@ -49,6 +50,13 @@ class FundQuotaOrderParams:
             if v is not None:
                 if hasattr(v, "value"):
                     d[k] = v.value
+                elif isinstance(v, datetime):
+                    if k in ["orderDate"]:
+                        d[k] = v.strftime("%Y-%m-%d")
+                    elif k in ["settlementDate", "quotationDate"]:
+                        d[k] = v.strftime("%Y-%m-%dT%H:%M:%S")
+                    else:
+                        d[k] = v.isoformat()
                 else:
                     d[k] = v
         return d

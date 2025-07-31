@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional
 
 from src.fixedincome.enums import AssetType, MarketType, OperationType, PaymentType
@@ -10,8 +11,8 @@ class FixedIncomeOrderParams:
     fundLegalId: str
     requesterName: str
     origin: str
-    orderDate: str
-    settlementDate: str
+    orderDate: datetime
+    settlementDate: datetime
     fundISINCode: Optional[str] = None
     operationType: Optional[OperationType] = None
     assetType: Optional[AssetType] = None
@@ -31,7 +32,7 @@ class FixedIncomeOrderParams:
     cetipAccountCounterparty: Optional[str] = None
     fundCetipAccount: Optional[str] = None
     externalId: Optional[str] = None
-    dueDate: Optional[str] = None
+    dueDate: Optional[datetime] = None
 
     def to_dict(self):
         d = {}
@@ -39,6 +40,11 @@ class FixedIncomeOrderParams:
             if v is not None:
                 if hasattr(v, "value"):
                     d[k] = v.value
+                elif isinstance(v, datetime):
+                    if k in ["orderDate", "settlementDate", "dueDate"]:
+                        d[k] = v.strftime("%Y-%m-%d")
+                    else:
+                        d[k] = v.strftime("%Y-%m-%dT%H:%M:%S")
                 else:
                     d[k] = v
         return d
