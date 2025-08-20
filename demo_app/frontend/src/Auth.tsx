@@ -50,19 +50,19 @@ export default function AuthForm({ onAuth }: AuthFormProps) {
       <h2>Autenticação XP</h2>
       <label>
         Client ID
-        <input value={clientId} onChange={e => setClientId(e.target.value)} required />
+        <input value={clientId} onChange={e => setClientId(e.target.value)} />
       </label>
       <label>
         Client Secret
-        <input value={clientSecret} onChange={e => setClientSecret(e.target.value)} required type="password" />
+        <input value={clientSecret} onChange={e => setClientSecret(e.target.value)} type="password" />
       </label>
       <label>
         Username
-        <input value={username} onChange={e => setUsername(e.target.value)} required />
+        <input value={username} onChange={e => setUsername(e.target.value)} />
       </label>
       <label>
         Password
-        <input value={password} onChange={e => setPassword(e.target.value)} required type="password" />
+        <input value={password} onChange={e => setPassword(e.target.value)} type="password" />
       </label>
       <label>
         Scope

@@ -13,6 +13,9 @@ class ApiEndpoints:
     # Endpoints
     AUTH_TOKEN = f"{OAUTH_API_BASE}/connect/token"
     AD_TOKEN = f"{AD_API_BASE}/cf56e405-d2b0-4266-b210-aa04636b6161/oauth2/v2.0/token"
+    AD_TOKEN_SCOPE = (
+        "api://xpcorretora.onmicrosoft.com/api-ws-assets-query-external-prd/.default"
+    )
     FILE_TYPES = f"{RESOURCE_API_BASE}/v1/files/types"
     FILE_FORMATS = f"{RESOURCE_API_BASE}/v1/files/formats"
     FILE_PORTFOLIOS = f"{RESOURCE_API_BASE}/v1/files/portfolios"

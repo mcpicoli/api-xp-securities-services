@@ -14,6 +14,7 @@ class AuthManager:
         self.client_id = client_id
         self.client_secret = client_secret
         self.token_url = ApiEndpoints.AUTH_TOKEN
+        self.ad_token_url = ApiEndpoints.AD_TOKEN
         self.access_token = None
         self.token_expiry = None
 
@@ -23,6 +24,9 @@ class AuthManager:
         """
         if self.access_token and self.token_expiry > datetime.now():
             return self.access_token
+
+        print("preparando requisição para obter novo token")
+        print(f"Client ID: {self.client_id}")
 
         response = requests.post(
             self.token_url,
@@ -34,6 +38,8 @@ class AuthManager:
                 "scope": "products",
             },
         )
+
+        print("Requisição enviada")
 
         if response.status_code == 200:
             token_data = response.json()

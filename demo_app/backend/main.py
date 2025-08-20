@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from src.api.api_endpoints import ApiEndpoints
+from src.auth.ad_auth_manager import ADAuthManager
 
 # Endpoint XP para autenticação
 from src.auth.auth_manager import AuthManager
@@ -307,11 +308,35 @@ def get_token(auth: AuthParams):
         "client_id": auth.client_id,
         "client_secret": auth.client_secret,
     }
+
     try:
-        return AuthManager.get_access_token(
+        auth_manager = AuthManager(
             client_id=auth.client_id,
             client_secret=auth.client_secret,
         )
+
+        return auth_manager.get_access_token()
+
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=str(e))
+
+
+# Autenticação XP via AD (POST)
+@app.post("/auth/token/ad")
+def get_token_via_ad(auth: AuthParams):
+    data = {
+        "client_id": auth.client_id,
+        "client_secret": auth.client_secret,
+    }
+
+    try:
+        auth_manager = ADAuthManager(
+            client_id=auth.client_id,
+            client_secret=auth.client_secret,
+        )
+
+        return auth_manager.get_access_token(scope=ApiEndpoints.AD_TOKEN_SCOPE)
+
     except Exception as e:
         raise HTTPException(status_code=401, detail=str(e))
 
