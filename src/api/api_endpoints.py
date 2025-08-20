@@ -7,8 +7,12 @@ class ApiEndpoints:
     OAUTH_API_BASE = "https://identity.xpi.com.br"
     AD_API_BASE = "https://login.microsoftonline.com"
     RESOURCE_API_BASE = "https://api-parceiros.xpi.com.br/securitiesservices"
-    FIXEDINCOME_API_BASE = "https://api-parceiros.xpi.com.br/partners/fixedincome"
-    FUNDQUOTA_API_BASE = "https://api-parceiros.xpi.com.br/partners/fundquota"
+    FIXEDINCOME_API_BASE = "https://api-parceiros.xpi.com.br/v1/partners/fixedincome"
+    FUNDQUOTA_API_BASE = "https://api-parceiros.xpi.com.br/v1/partners/fundquota"
+
+    # Subscription Key
+    # (suponho que isso não seja algo que é secreto)
+    SUBSCRIPTION_KEY = "ada131f3cf3a41a2a0d8ce0048b43ad9"
 
     # Endpoints
     AUTH_TOKEN = f"{OAUTH_API_BASE}/connect/token"
